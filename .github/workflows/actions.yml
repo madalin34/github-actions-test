@@ -5,10 +5,13 @@ jobs:
   run-github-actions:
     runs-on: ubuntu-latest
     steps:
+    #actiunea asta cloneaza branch-ul ce a pornit workflow-ul in VM
+    - name: Checkout
+      uses: actions/checkout@v3
     - name: List Files
       run: |
         pwd
-        ls
+        ls -a
     - name: Simple JS Action
     # referinta catre o actiune, repo-uri publice pe git. Sunt scrise in JS
     #la @ se poate specifica versiunea e.g.: Release, commit id, branch name
