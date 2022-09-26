@@ -2,7 +2,8 @@ name: Shel Commands
 #poate fi o lista de evenimente ce declanseaza workflow-ul e.g. [push, pull etc]
 on: [push]
 
-#fiecare job va lucra in paralel in propriul VM dar se poate seta sa se astepte unul pe altul
+#fiecare job va lucra in paralel by default in propriul VM
+# se poate seta sa lucreze in serie
 jobs: 
   run-shell-command: # numele job-ului
     runs-on: ubuntu-latest # OS-ul runner-ului
@@ -20,6 +21,7 @@ jobs:
       shell: python # specificam step-ului in ce shell sa ruleze comenzile, default e bash
   run-windows-command:
     runs-on: windows-latest
+    needs: ["run-shell-command"]
     steps:
     - name: Directory PowerShell
       run: Get-Location
