@@ -1,0 +1,21 @@
+name: Action workflow-ul
+on: [push]
+
+jobs:
+  run-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Simple JS Action
+    # referinta catre o actiune, repo-uri publice pe git. Sunt scrise in JS
+    #la @ se poate specifica versiunea e.g.: Release, commit id, branch name
+    #Se recomanda sa referim versiune. Daca pun v1 si exista 1.3 se va pune automat 1.3
+    #v1.2.3 1-version, 2-minor version 3-patch version
+      uses: actions/hello-world-javascript-action@v1
+      #cu "with" putem specifica conform doc actiunii ce input-uri poate primi
+      with:
+        who-to-greet: John
+      id: greet
+    - name: Log Greeting Time
+      #putem folosi output-ul din alt step. "steps" e un obiect, "greet" e id-ul step-ului setat
+      #de noi, "time" e din doc actiunii
+      run: echo "${{ steps.greet.outputs.time }}"
