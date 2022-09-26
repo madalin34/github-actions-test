@@ -1,0 +1,14 @@
+name: Shel Commands
+#poate fi o lista de evenimente ce declanseaza workflow-ul e.g. [push, pull etc]
+on: [push]
+
+jobs:
+  run-shell-command: # numele job-ului
+    runs-on: ubuntu-latest # OS-ul runner-ului
+    steps: #poate performa o actiune sau o comanda shell
+    - name: echo a string # aici e optional numele
+      run: echo "Hello World" # cu run execut comenzi shell
+    - name: multiline script
+      run: | # folosind acest pipe putem scrie mai multe comenzi pe mai multe linii
+        node -v
+        npm -v  
