@@ -11,4 +11,9 @@ jobs:
     - name: multiline script
       run: | # folosind acest pipe putem scrie mai multe comenzi pe mai multe linii
         node -v
-        npm -v  
+        npm -v
+    - name: python Commands
+      run: |
+        import platform
+        print(platform.processor())
+      shell: python # specificam step-ului in ce shell sa ruleze comenzile, default e bash
