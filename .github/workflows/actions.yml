@@ -5,6 +5,10 @@ jobs:
   run-github-actions:
     runs-on: ubuntu-latest
     steps:
+    - name: List Files
+      run: |
+        pwd
+        ls
     - name: Simple JS Action
     # referinta catre o actiune, repo-uri publice pe git. Sunt scrise in JS
     #la @ se poate specifica versiunea e.g.: Release, commit id, branch name
