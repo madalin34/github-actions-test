@@ -1,13 +1,36 @@
 name: Action workflow-ul
-on: [push]
+on:
+  #doc https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#repository_dispatch
+  #folosind Postam putem trigarui workflow-uri manual
+  # repository_dispatch:
+  #   types: [build]
+  push:
+    # Filter patterns
+    # nu putem avea branchesd si branches-ignore simultan
+    # branches-ignore: -> workflow ruleaza pt orice branch mai putin ce e aici
+    branches: #poate fi folosit si cu pull_request
+    - main
+    - 'feature/*' # matches orice branch ce incepe cu 'feature/<nume_branch>'
+    - 'feature/**' # matches any string e.g. feature/a/b
+    - '!feature/c' # "!" va ignora branch-ul cu acest pattern. Trebuie pus la final de array
+    tags: # ca mai sus pt tags-ignore
+      - v1.*
+    paths: # ca mai sus pt paths-ignore
+    - '**.js' # rulam workflow pt fisiere js
+    - '!filename.js' # nu va rula cand modificam acest fisier
+  #poate fi si obiect, specificam pt ce actiune va porni workflow conform doc
+  pull_request:
+    #activity types
+    types: [closed, assigned, opened, reopened]
 
 jobs:
   run-github-actions:
     runs-on: ubuntu-latest
     steps:
-    #actiunea asta cloneaza branch-ul ce a pornit workflow-ul in VM
+    #actiunea asta cloneaza commit-ul ce a pornit workflow-ul in VM
     - name: Checkout
       uses: actions/checkout@v3
+      #doc input(with) https://github.com/actions/checkout#usage
     - name: List Files
       run: |
         pwd

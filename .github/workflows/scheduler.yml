@@ -1,0 +1,13 @@
+# name: Action workflow-ul schedule
+# on: 
+#   schedule:
+#   #de la stanga la dreapta: minute ora zi_luna luna day_of_the_week
+#   # * -> any val
+#   # tool helper schedule https://crontab.guru/
+#   # * * * * * -> va rula la fiecare minut
+#   # 1 * * * * -> va rula la minutul 1 al fiecarei ore
+#   # 1,2 * * * * -> va rula la minutul 1 si 2 al fiecarei ore
+#   # 1-3 -> va rula la min 1 2 si 3
+#   # 0/15 -> va rula incepand cu min 0 la fiecare 15 min
+#   - cron: "0/5 * * * *"
+#   #poate fi si obiect, specificam pt ce actiune va porni workflow conform doc
