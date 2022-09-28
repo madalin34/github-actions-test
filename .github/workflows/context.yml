@@ -1,18 +1,34 @@
 name: Context testing
-on: push
+on: [push, pull_request]
 
 jobs:
+  functions: 
+      runs-on: ubuntu-latest
+      steps:
+        - name: dump
+          run: |
+            echo ${{ contains( 'hello', '11' ) }}
+            echo ${{ startsWith( 'hello', 'he' ) }}
+            echo ${{ endsWith( 'hello', '1o' ) }}
+            echo ${{ format( 'Hello {0} {1} {2}', 'World', '!', '!' ) }}
   dump_contexts_to_log:
     runs-on: ubuntu-latest
+    # nu e nevoie de ${{}} deoarece if e tratat ca o expresie
+    # job-ul va rula doar la push
+    if: github.event_name == 'push'
     steps:
       - name: Dump GitHub context
         id: github_context_step
         run: echo '${{ toJSON(github) }}'
       - name: Dump job context
+        # fct va intoarce true doar daca step-ul precedent a esuat
+        if: failure()
         run: echo '${{ toJSON(job) }}'
       - name: Dump steps context
         run: echo '${{ toJSON(steps) }}'
       - name: Dump runner context
+        # acest step va rula indiferent de ce se intampla mai sus
+        if: always()
         run: echo '${{ toJSON(runner) }}'
       - name: Dump strategy context
         run: echo '${{ toJSON(strategy) }}'
