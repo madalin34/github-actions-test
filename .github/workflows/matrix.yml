@@ -3,12 +3,24 @@ on: push
 
 jobs:
   node-version:
+    strategy:
+      matrix:
+        # acest job va rula de 3 ori acum cu valori diferite pot node_version
+        node_version: [6, 8, 10]
+        # daca decomentam linia de mai jos vor rula 9 job-uri
+        # de asemenea trebuie inlocuit la "runs-on" cu matrix.os
+        # os: [macos-latest, ubuntu-latest, windows-latest]
+      # default e true si inseamna ca daca un job esueaza restul job-urilor se vor opri
+      # setat pe false fiecare job va rula independent de celelalte job-uri 
+      fail-fast: true
+      # putem limita nr de job-uri ce ruleaza in paralel. Default git va incerca sa maximizeze nr
+      # max-parallel: 0
     runs-on: ubuntu-latest
     steps:
     - name: Log node version
       run: node -v
     - uses: actions/setup-node@v1
       with:
-        node-version: 6
+        node-version: ${{ matrix.node_version }}
     - name: Log node version
       run: node -v
