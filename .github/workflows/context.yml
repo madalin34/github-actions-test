@@ -22,12 +22,12 @@ jobs:
         run: echo '${{ toJSON(github) }}'
       - name: Dump job context
         # fct va intoarce true doar daca step-ul precedent a esuat
-        if: failure()
+        #if: failure()
         run: echo '${{ toJSON(job) }}'
       - name: Dump steps context
         run: echo '${{ toJSON(steps) }}'
       - name: Dump runner context
-        # acest step va rula indiferent de ce se intampla mai sus
+        # acest step va rula chiar daca mai sus un step a esuat
         if: always()
         run: echo '${{ toJSON(runner) }}'
       - name: Dump strategy context

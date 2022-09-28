@@ -7,9 +7,13 @@ on: [push]
 jobs: 
   run-shell-command: # numele job-ului
     runs-on: ubuntu-latest # OS-ul runner-ului
+    # timeout-minutes: 360 default job-ul ruleaza 6 ore. Se poate seta si pt step
     steps: #poate performa o actiune sau o comanda shell(CMD). Aici folosim doar CMD
     - name: echo a string # aici e optional numele
       run: echo "Hello World" # cu run execut comenzi shell
+      # default e false
+      # toate step-urile urmatoare vor rula daca e setat pe true si esueaza acest step
+      # continue-on-error: true
     - name: multiline script
       run: | # folosind acest pipe putem scrie mai multe comenzi pe mai multe linii
         node -v
@@ -21,7 +25,8 @@ jobs:
       shell: python # specificam step-ului in ce shell sa ruleze comenzile, default e bash
   run-windows-command:
     runs-on: windows-latest
-    needs: ["run-shell-command"] # setez job-urile in serie, array cu nume de care sa depinda
+    # setez job-urile in serie, array cu nume de care sa depinda
+    needs: ["run-shell-command"] 
     steps:
     - name: Directory PowerShell
       run: Get-Location
