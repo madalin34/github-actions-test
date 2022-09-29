@@ -5,17 +5,33 @@ jobs:
   node-version:
     strategy:
       matrix:
-        # acest job va rula de 3 ori acum cu valori diferite pot node_version
-        node_version: [6, 8, 10]
+        # trebuie inlocuit la "runs-on" cu matrix.os
+        # acest job va rula de 3 ori acum cu valori diferite pot os
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
         # daca decomentam linia de mai jos vor rula 9 job-uri
-        # de asemenea trebuie inlocuit la "runs-on" cu matrix.os
-        # os: [macos-latest, ubuntu-latest, windows-latest]
+        node_version: [6, 8, 10]
+        include:
+        - os: ubuntu-latest
+          node_version: 8
+          # putem adauga un env doar pt acest caz
+          is_ubuntu_8: "true"
+        # sub forma de cheie valoare excludem ce nu vrem sa ruleze. Va rula de 7 ori
+        exclude:
+        - os: ubuntu-latest
+          node_version: 6
+        - os: macos-latest
+          node_version: 8
+        
       # default e true si inseamna ca daca un job esueaza restul job-urilor se vor opri
       # setat pe false fiecare job va rula independent de celelalte job-uri 
       fail-fast: true
       # putem limita nr de job-uri ce ruleaza in paralel. Default git va incerca sa maximizeze nr
       # max-parallel: 0
     runs-on: ubuntu-latest
+    env:
+      # explicatie linia 17
+      IS_UBUNTU_8: ${{ matrix.is_ubuntu_8 }}
     steps:
     - name: Log node version
       run: node -v
@@ -23,4 +39,6 @@ jobs:
       with:
         node-version: ${{ matrix.node_version }}
     - name: Log node version
-      run: node -v
+      run: |
+        node -v
+        echo "IS_UBUNTU_8: $IS_UBUNTU_8"
