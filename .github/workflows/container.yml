@@ -17,9 +17,9 @@ jobs:
       # putem suprascrie
       with:
         # in GH Actions entrypoint e doar un path catre executabil. Explicatii info linia 25
-        entrypoint: "bin/echo"
+        entrypoint: echo
         # <=> CMD din docker. Putem pune doar un argument
-        args: "Hello World"
+        args: Hello World
     - name: Log node version
       # pe langa actions putem rula imagini docker in step
       uses: docker://node:12.14.1-alpine3.10
