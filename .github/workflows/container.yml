@@ -2,9 +2,33 @@ name: Container
 on: push
 
 jobs:
+  docker-steps:
+    runs-on: ubuntu-latest
+    container:
+      image: node:10.18.0-jessie
+    # steps va rula in interiorul containerului
+    steps:
+    - name: log node version
+      run: node -v
+    - name: Step with docker
+      # pe langa actions putem rula imagini docker in step
+      uses: docker://node:12.14.1-alpine3.10
+      # putem suprascrie
+      with:
+        # in GH Actions entrypoint e doar un path catre executabil. Explicatii info linia 25
+        entrypoint: bin/echo
+        # <=> CMD din docker. Putem pune doar un argument
+        args: Hello World
+    - name: Log node version
+      # pe langa actions putem rula imagini docker in step
+      uses: docker://node:12.14.1-alpine3.10
+      # putem suprascrie
+      with:
+        entrypoint: /usr/local/bin/node
+        args: -v
   node-docker:
     runs-on: ubuntu-latest
-    # putem rula imagini docker
+    # putem rula mai multe imagini docker
     services: 
       app:
         image: alialaa17/node-api
